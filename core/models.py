@@ -9,3 +9,5 @@ class ExchangeRate(models.Model):
     class Meta:
         verbose_name = 'Курс обмена валюты'
         verbose_name_plural = 'Курсы обмена валют'
+        constraints = [models.UniqueConstraint(fields=['charcode', 'date'],
+                                               name='unique_charcode_date')]
