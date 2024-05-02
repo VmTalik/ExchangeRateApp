@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  db_postgres:
+    image: postgres:latest
+    container_name: db_postgres
+    volumes:
+      - postgresql-data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    ports:
+      - 54321:5432
+  app:
+    build:
+      context: .
+    container_name: exchange_rate_app_django
+    command: bash -c 'python3 manage.py migrate; service cron start; python manage.py crontab add; python3 manage.py runserver 0.0.0.0:8000'
+    depends_on:
+      - db_postgres
+    volumes:
+      - .:/app/.
+    env_file:
+      - .env
+    ports:
+      - 8000:8000
+
+volumes:
+  postgresql-data:

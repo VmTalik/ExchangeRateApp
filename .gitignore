@@ -1,0 +1,7 @@
+*.log
+*.pot
+*.pyc
+__pycache__/
+.idea/
+media
+tmp
